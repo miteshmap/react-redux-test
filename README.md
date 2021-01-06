@@ -1,2 +1,2 @@
-# react-redux-test
+# react-usereducer
 Created with CodeSandbox
