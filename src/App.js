@@ -1,57 +1,6 @@
-import React, { useReducer } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import "./styles.css";
-
-function LoginReducer(state, action) {
-  switch (action.type) {
-    case "field":
-      return {
-        ...state,
-        [action.name]: action.value,
-        error: "",
-        isLoading: false,
-        isLoggedIn: false
-      };
-      break;
-
-    case "login":
-      return {
-        ...state,
-        error: "",
-        isLoading: true,
-        isLoggedIn: false
-      };
-      break;
-
-    case "success":
-      return {
-        ...state,
-        error: "",
-        isLoading: false,
-        isLoggedIn: true
-      };
-      break;
-
-    case "error":
-      return {
-        ...state,
-        error: "We could not found user with given username and password",
-        isLoading: false,
-        isLoggedIn: false
-      };
-      break;
-    default:
-      break;
-  }
-  return state;
-}
-
-const initialState = {
-  username: "",
-  password: "",
-  error: "",
-  isLoading: false,
-  isLoggedIn: false
-};
 
 async function login({ username, password }) {
   return Promise((resolve, reject) => {
@@ -65,9 +14,10 @@ async function login({ username, password }) {
   });
 }
 
-export default function App() {
-  const [state, dispatch] = useReducer(LoginReducer, initialState);
-  const { username, password, isLoading, isLoggedIn, error } = state;
+function App({ username, password, isLoading, isLoggedIn, error, dispatch }) {
+  // const [state, dispatch] = useReducer(LoginReducer, initialState);
+  // const {  } = props;
+  // console.log(props);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -145,3 +95,5 @@ export default function App() {
     </form>
   );
 }
+
+export default connect((state) => state)(App);
